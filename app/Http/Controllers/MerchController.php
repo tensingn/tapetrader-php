@@ -14,7 +14,7 @@ class MerchController extends Controller
      */
     public function index()
     {
-        return Merch::all();
+        return \Response::json(Merch::all(), 200);
     }
 
     /**
@@ -49,7 +49,7 @@ class MerchController extends Controller
         $merch->band_id = $request->input('band_id');
         $merch->save();
 
-        return 'created';
+        return \Response::json(["id" => $merch->id], 201);
     }
 
     /**
@@ -60,7 +60,12 @@ class MerchController extends Controller
      */
     public function show($id)
     {
-        return Merch::find($id);
+        $merch = Merch::find($id);
+        if(is_null($merch)) {
+            return \Response::json(['message' => 'not found'], 404);
+        } else {
+            return \Response::json($merch, 200);
+        }
     }
 
     /**
@@ -91,14 +96,17 @@ class MerchController extends Controller
         ]);
 
         $merch = Merch::find($id);
-        $merch->description = $request->input('description');
-        $merch->type = $request->input('type');
-        $merch->condition = $request->input('condition');
-        $merch->band_id = $request->input('band_id');
-        $merch->save();
+        if(is_null($merch)) {
+            return \Response::json(['message' => 'not found'], 404);
+        } else {
+            $merch->description = $request->input('description');
+            $merch->type = $request->input('type');
+            $merch->condition = $request->input('condition');
+            $merch->band_id = $request->input('band_id');
+            $merch->save();
 
-        return 'updated';
-
+            return \Response::json(['message' => 'updated'], 200);
+        }
     }
 
     /**
@@ -110,7 +118,11 @@ class MerchController extends Controller
     public function destroy($id)
     {
         $merch = Merch::find($id);
-        $merch->delete(); 
-        return 'deleted';
+        if(is_null($merch)) {
+            return \Response::json(['message' => 'not found'], 404);
+        } else {
+            $merch->delete(); 
+            return \Response::json(['message' => 'deleted'], 200);
+        }
     }
 }
