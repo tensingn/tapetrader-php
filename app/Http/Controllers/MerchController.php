@@ -110,7 +110,7 @@ class MerchController extends Controller
     public function destroy($id)
     {
         $merch = Merch::find($id);
-        $merch->delete();
+        $merch->delete(); 
         return 'deleted';
     }
 }
