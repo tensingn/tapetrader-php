@@ -1,0 +1,331 @@
+{
+	"info": {
+		"_postman_id": "ab103b85-c0c5-4eae-8ee9-9a6787d0c8bb",
+		"name": "tapetrader-php",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "post-merch",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"merch_created\", pm.response.json().id);",
+							"",
+							"pm.test(\"200 status code\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"AC/DC CD\",\n    \"type\": \"music\",\n    \"condition\": \"like new\",\n    \"band_id\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/merch",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"merch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-all-merch",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/merch",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"merch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-specific-merch",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/merch/{{merch_created}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"merch",
+						"{{merch_created}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put-specific-merch",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"updated\", function () {",
+							"    const responseJson = pm.response.json().message;",
+							"    pm.expect(responseJson).to.eql(\"updated\");",
+							"});",
+							"",
+							"pm.test(\"200 status code\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"AC/DC Vinyl\",\n    \"type\": \"music\",\n    \"condition\": \"new\",\n    \"band_id\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/merch/{{merch_created}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"merch",
+						"{{merch_created}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-specific-merch",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"200 status code\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"deleted\", function () {",
+							"    const responseJson = pm.response.json().message;",
+							"    pm.expect(responseJson).to.eql(\"deleted\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/merch/{{merch_created}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"merch",
+						"{{merch_created}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete-specific-merch-bad-id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"404 status code\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"not found\", function () {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson.message).to.eql(\"not found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/merch/{{merch_created}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"merch",
+						"{{merch_created}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put-specific-merch-bad-id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"404 status code\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"not found\", function () {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson.message).to.eql(\"not found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"AC/DC Vinyl\",\n    \"type\": \"music\",\n    \"condition\": \"new\",\n    \"band_id\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/merch/{{merch_created}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"merch",
+						"{{merch_created}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-specific-merch-bad-id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"404 status code\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"not found\", function () {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson.message).to.eql(\"not found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"AC/DC Vinyl\",\n    \"type\": \"music\",\n    \"condition\": \"new\",\n    \"band_id\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/merch/{{merch_created}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"merch",
+						"{{merch_created}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
