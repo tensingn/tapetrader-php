@@ -3,4 +3,4 @@ Basic PHP/Laravel REST API for tape trader project - only basic CRUD functionali
 
 Where to start
 
-Inside the Tests/Postman folder there are two files: a Postman collection and a Postman environment. These can be imported in Postman to test the API.
+Inside the tests/Postman folder there are two files: a Postman collection and a Postman environment. These can be imported in Postman to test the API.
